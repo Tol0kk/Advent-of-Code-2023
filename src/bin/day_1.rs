@@ -13,14 +13,14 @@ fn part1(input: &str) -> u32 {
         .map(|line| {
             let first = line
                 .chars()
-                .find(|c| c.is_digit(10))
+                .find(|c| c.is_ascii_digit())
                 .unwrap()
                 .to_digit(10)
                 .unwrap();
             let last = line
                 .chars()
                 .rev()
-                .find(|c| c.is_digit(10))
+                .find(|c| c.is_ascii_digit())
                 .unwrap()
                 .to_digit(10)
                 .unwrap();
@@ -78,51 +78,7 @@ fn part2(input: &str) -> u32 {
                     last = Some(num);
                 }
             }
-            let result = first.unwrap() * 10 + last.unwrap();
-            result
-        })
-        .sum::<u32>();
-}
-
-fn part2_rayon(input: &str) -> u32 {
-    fn match_num(line: &str, i: usize) -> Option<u32> {
-        let mut num = None;
-        for exp in TABLE_NUM {
-            if i + exp.0.len() <= line.len() {
-                let substring = &line[i..i + exp.0.len()];
-                if substring == exp.0 {
-                    num = Some(exp.1);
-                    break;
-                }
-            }
-        }
-        num
-    }
-    return input
-        .trim()
-        .lines()
-        .map(|line| {
-            let mut first: Option<u32> = None;
-            let mut last: Option<u32> = None;
-
-            for (i, c) in line.chars().enumerate() {
-                let num = match match_num(line, i) {
-                    Some(num) => num,
-                    None => match c.to_digit(10) {
-                        Some(num) => num,
-                        None => continue,
-                    },
-                };
-                if last.is_some() {
-                    last = Some(num);
-                }
-                if first.is_none() {
-                    first = Some(num);
-                    last = Some(num);
-                }
-            }
-            let result = first.unwrap() * 10 + last.unwrap();
-            result
+            first.unwrap() * 10 + last.unwrap()
         })
         .sum::<u32>();
 }
@@ -172,14 +128,4 @@ zoneight234
         assert_eq!(result, 56017)
     }
 
-    #[bench]
-    fn part2_input() {
-        let result = part2(include_str!("../../inputs/day_1.txt"));
-        assert_eq!(result, 56017)
-    }
-
-    #[bench]
-    fn name(b: &mut test::Bencher) {
-        b.iter(|| /* benchmark code */)
-    }
 }
