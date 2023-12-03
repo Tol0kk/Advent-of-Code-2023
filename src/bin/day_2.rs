@@ -1,9 +1,9 @@
 fn main() {
     let input = include_str!("../../inputs/day_2.txt");
     let result = part1(input);
-    println!("{}", result);
+    println!("{result}");
     let result = part2(input);
-    println!("{}", result);
+    println!("{result}");
 }
 
 const MAX_BLUE: u32 = 14;

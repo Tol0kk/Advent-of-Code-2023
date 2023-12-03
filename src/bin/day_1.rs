@@ -1,9 +1,9 @@
 fn main() {
     let input = include_str!("../../inputs/day_1.txt");
     let result = part1(input);
-    println!("{}", result);
+    println!("{result}");
     let result = part2(input);
-    println!("{}", result);
+    println!("{result}");
 }
 
 fn part1(input: &str) -> u32 {
@@ -13,14 +13,14 @@ fn part1(input: &str) -> u32 {
         .map(|line| {
             let first = line
                 .chars()
-                .find(|c| c.is_ascii_digit())
+                .find(char::is_ascii_digit)
                 .unwrap()
                 .to_digit(10)
                 .unwrap();
             let last = line
                 .chars()
                 .rev()
-                .find(|c| c.is_ascii_digit())
+                .find(char::is_ascii_digit)
                 .unwrap()
                 .to_digit(10)
                 .unwrap();
